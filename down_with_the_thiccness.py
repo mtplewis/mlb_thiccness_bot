@@ -2,10 +2,20 @@
 import mlbgame
 import json
 import mlbgame.data
+import operator
 
 team_bmis = {}
 team_thiccest = {}
 
+
+def sort_teams():
+    sorted_team_bmis = sorted(team_bmis.items(), key=operator.itemgetter(1))
+    sorted_dict = {}
+    for x in sorted_team_bmis:
+        team = str(x)[2:].split('\',')[0]
+        bmi = str(x)[2:].split('\',')[1]
+        sorted_dict[team] = bmi
+    return sorted_dict
 
 def get_team_id(team_name):
     teams = mlbgame.teams()
@@ -132,8 +142,8 @@ if __name__ == '__main__':
             for team in mlbgame.teams():
                 team_average_bmi(str(team))
             print("\nAverage Team BMIs:")
-            for x in team_bmis:
-                print("Team:", x, "BMI", team_bmis[x])
+            for x in sort_teams():
+                print("Team:", x, "BMI:", team_bmis[x])
             again = input("Would you like to choose another option? y/n: ")
             if again.lower() == "n":
                 break
